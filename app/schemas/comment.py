@@ -17,8 +17,9 @@ class CommentUpdate(BaseSchema):
 
 class CommentOut(BaseSchema):
     id_comment: int
-    comment_text: str
-    created_at: datetime
     id_request: Optional[int] = None
     id_appointment: Optional[int] = None
     id_employee: int
+    employee_name: Optional[str] = None
+    comment_text: str
+    created_at: datetime

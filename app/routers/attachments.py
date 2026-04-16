@@ -32,7 +32,8 @@ def _to_out(a: Attachment, base_url: str = "") -> AttachmentOut:
     )
 
 
-@router.get("/ByAppointment/{appointment_id}", response_model=List[AttachmentOut])
+# GET /api/attachments/byappointment/{id}  (было ByAppointment)
+@router.get("/byappointment/{appointment_id}", response_model=List[AttachmentOut])
 def get_attachments_by_appointment(
     appointment_id: int, request: Request, db: Session = Depends(get_db)
 ):
@@ -47,11 +48,13 @@ def get_attachments_by_appointment(
     return [_to_out(a, base_url) for a in attachments]
 
 
-@router.post("/Upload", response_model=AttachmentOut)
+# POST /api/attachments/upload  (было Upload)
+@router.post("/upload", response_model=AttachmentOut)
 async def upload_file(
     request: Request,
     file: UploadFile = File(...),
-    appointment_id: int = Form(...),
+    # C# клиент шлёт поле "appointmentId" (camelCase)
+    appointment_id: int = Form(..., alias="appointmentId"),
     db: Session = Depends(get_db),
 ):
     if not file or not file.filename:
@@ -103,7 +106,8 @@ async def upload_file(
     )
 
 
-@router.get("/Download/{id}")
+# GET /api/attachments/download/{id}  (было Download)
+@router.get("/download/{id}")
 def download_file(id: int, db: Session = Depends(get_db)):
     attachment = db.query(Attachment).filter(Attachment.id_attachment == id).first()
     if not attachment:
@@ -123,6 +127,7 @@ def download_file(id: int, db: Session = Depends(get_db)):
     )
 
 
+# DELETE /api/attachments/{id}
 @router.delete("/{id}", status_code=204)
 def delete_attachment(id: int, db: Session = Depends(get_db)):
     attachment = db.query(Attachment).filter(Attachment.id_attachment == id).first()
