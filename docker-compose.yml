@@ -1,0 +1,10 @@
+services:
+  api:
+    build: .
+    container_name: skatenergy_api
+    ports:
+      - "127.0.0.1:8022:8000"
+    volumes:
+      - ./data:/app/data       # SQLite база данных
+      - ./uploads:/app/uploads # Загруженные файлы
+    restart: unless-stopped

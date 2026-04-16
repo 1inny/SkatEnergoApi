@@ -1,0 +1,10 @@
+SkatEnergoApi/
+SkatEnergoApi.sln
+data/
+uploads/
+__pycache__/
+*.pyc
+*.pyo
+.git/
+.gitignore
+*.md
