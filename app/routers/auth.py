@@ -23,7 +23,7 @@ def _build_employee_out(user: Employee) -> EmployeeOut:
     )
 
 
-@router.get("/login", response_model=EmployeeOut)
+@router.post("/login", response_model=EmployeeOut)
 def login(request: LoginRequest, db: Session = Depends(get_db)):
     user = db.query(Employee).filter(Employee.login == request.login).first()
     if not user or not pwd_context.verify(request.password, user.password):
@@ -35,7 +35,7 @@ def login(request: LoginRequest, db: Session = Depends(get_db)):
     return _build_employee_out(user)
 
 
-@router.get("/mobile-login", response_model=EmployeeOut)
+@router.post("/mobile-login", response_model=EmployeeOut)
 def mobile_login(request: LoginRequest, db: Session = Depends(get_db)):
     user = db.query(Employee).filter(Employee.login == request.login).first()
     if not user or not pwd_context.verify(request.password, user.password):
