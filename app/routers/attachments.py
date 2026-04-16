@@ -53,8 +53,9 @@ def get_attachments_by_appointment(
 async def upload_file(
     request: Request,
     file: UploadFile = File(...),
-    # C# клиент шлёт поле "appointmentId" (camelCase)
+    # C# клиент шлёт поля camelCase
     appointment_id: int = Form(..., alias="appointmentId"),
+    uploaded_by: int = Form(1, alias="uploadedBy"),
     db: Session = Depends(get_db),
 ):
     if not file or not file.filename:
@@ -86,7 +87,7 @@ async def upload_file(
         file_size=len(contents),
         content_type=content_type,
         uploaded_at=datetime.now(),
-        uploaded_by=None,
+        uploaded_by=uploaded_by,
     )
     db.add(attachment)
     db.commit()
