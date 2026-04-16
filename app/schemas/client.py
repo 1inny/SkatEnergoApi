@@ -5,10 +5,9 @@ from pydantic import BaseModel
 class ClientBase(BaseModel):
     first_name: str
     last_name: str
-    middle_name: Optional[str] = None
     phone: str
     email: Optional[str] = None
-    id_subject_type: int
+    id_subject_type: Optional[int] = None
 
 
 class ClientCreate(ClientBase):
