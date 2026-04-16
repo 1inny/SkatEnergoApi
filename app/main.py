@@ -1,7 +1,16 @@
 import os
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from starlette.middleware.base import BaseHTTPMiddleware
+
+
+class LowerCasePathMiddleware(BaseHTTPMiddleware):
+    """Нормализует URL-путь к нижнему регистру.
+    Нужно для совместимости с C# клиентом: /api/Auth/login -> /api/auth/login"""
+    async def dispatch(self, request: Request, call_next):
+        request.scope["path"] = request.scope["path"].lower()
+        return await call_next(request)
 
 from app.database import engine, Base
 from app.routers import (
@@ -15,6 +24,9 @@ from app.routers import (
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="SkatEnergo API", version="1.0.0")
+
+# Нормализация регистра URL (совместимость с C# клиентом)
+app.add_middleware(LowerCasePathMiddleware)
 
 # CORS — разрешаем любые источники (как в оригинале)
 app.add_middleware(
