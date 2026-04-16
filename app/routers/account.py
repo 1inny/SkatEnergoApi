@@ -1,13 +1,16 @@
+import bcrypt
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from passlib.context import CryptContext
 
 from app.database import get_db
 from app.models import Employee
 from app.schemas.auth import ChangePasswordRequest, ChangeLoginRequest
 
 router = APIRouter(prefix="/api/account", tags=["Account"])
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+
+def hash_password(plain: str) -> str:
+    return bcrypt.hashpw(plain.encode(), bcrypt.gensalt(12)).decode()
 
 
 @router.post("/change-password")
@@ -15,7 +18,7 @@ def change_password(request: ChangePasswordRequest, db: Session = Depends(get_db
     user = db.query(Employee).filter(Employee.id_employee == request.user_id).first()
     if not user:
         raise HTTPException(status_code=404, detail="Сотрудник не найден")
-    user.password = pwd_context.hash(request.new_password)
+    user.password = hash_password(request.new_password)
     db.commit()
     return {"message": "Пароль изменён"}
 

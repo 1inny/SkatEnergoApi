@@ -1,14 +1,17 @@
+import bcrypt
 from typing import List
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session, joinedload
-from passlib.context import CryptContext
 
 from app.database import get_db
 from app.models import Employee
 from app.schemas.employee import EmployeeCreate, EmployeeUpdate, EmployeeOut
 
 router = APIRouter(prefix="/api/employees", tags=["Employees"])
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+
+def hash_password(plain: str) -> str:
+    return bcrypt.hashpw(plain.encode(), bcrypt.gensalt(12)).decode()
 
 
 def _to_out(e: Employee) -> EmployeeOut:
@@ -41,7 +44,7 @@ def get_employee(id: int, db: Session = Depends(get_db)):
 def create_employee(dto: EmployeeCreate, db: Session = Depends(get_db)):
     employee = Employee(
         login=dto.login,
-        password=pwd_context.hash(dto.password),
+        password=hash_password(dto.password),
         first_name=dto.first_name,
         last_name=dto.last_name,
         id_role=dto.id_role,
@@ -63,7 +66,7 @@ def update_employee(id: int, dto: EmployeeUpdate, db: Session = Depends(get_db))
     employee.id_role = dto.id_role
     employee.phone = dto.phone
     if dto.new_password:
-        employee.password = pwd_context.hash(dto.new_password)
+        employee.password = hash_password(dto.new_password)
     db.commit()
 
 
