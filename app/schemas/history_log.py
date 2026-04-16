@@ -1,9 +1,9 @@
 from datetime import datetime
 from typing import Optional
-from pydantic import BaseModel
+from app.schemas.base import BaseSchema
 
 
-class HistoryLogCreate(BaseModel):
+class HistoryLogCreate(BaseSchema):
     field_name: str
     old_value: Optional[str] = None
     new_value: Optional[str] = None
@@ -14,7 +14,7 @@ class HistoryLogCreate(BaseModel):
     id_change_type: int
 
 
-class HistoryLogUpdate(BaseModel):
+class HistoryLogUpdate(BaseSchema):
     field_name: str
     old_value: Optional[str] = None
     new_value: Optional[str] = None
@@ -22,15 +22,13 @@ class HistoryLogUpdate(BaseModel):
     id_change_type: int
 
 
-class HistoryLogOut(BaseModel):
+class HistoryLogOut(BaseSchema):
     id_history: int
     field_name: str
     old_value: Optional[str] = None
     new_value: Optional[str] = None
-    created_at: datetime
+    created_at: Optional[datetime] = None
     id_request: Optional[int] = None
     id_appointment: Optional[int] = None
     id_employee: int
     id_change_type: int
-
-    model_config = {"from_attributes": True}

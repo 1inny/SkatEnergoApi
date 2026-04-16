@@ -1,8 +1,8 @@
 from typing import Optional
-from pydantic import BaseModel
+from app.schemas.base import BaseSchema
 
 
-class EmployeeCreate(BaseModel):
+class EmployeeCreate(BaseSchema):
     login: str
     password: str
     first_name: str
@@ -11,7 +11,7 @@ class EmployeeCreate(BaseModel):
     phone: Optional[str] = None
 
 
-class EmployeeUpdate(BaseModel):
+class EmployeeUpdate(BaseSchema):
     login: str
     first_name: str
     last_name: str
@@ -20,7 +20,7 @@ class EmployeeUpdate(BaseModel):
     new_password: Optional[str] = None
 
 
-class EmployeeOut(BaseModel):
+class EmployeeOut(BaseSchema):
     id_employee: int
     login: str
     first_name: str
@@ -28,5 +28,3 @@ class EmployeeOut(BaseModel):
     id_role: int
     role_name: Optional[str] = None
     phone: Optional[str] = None
-
-    model_config = {"from_attributes": True}

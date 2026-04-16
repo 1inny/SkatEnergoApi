@@ -1,16 +1,16 @@
-from pydantic import BaseModel
+from app.schemas.base import BaseSchema
 
 
-class LoginRequest(BaseModel):
+class LoginRequest(BaseSchema):
     login: str
     password: str
 
 
-class ChangePasswordRequest(BaseModel):
+class ChangePasswordRequest(BaseSchema):
     user_id: int
     new_password: str
 
 
-class ChangeLoginRequest(BaseModel):
+class ChangeLoginRequest(BaseSchema):
     user_id: int
     new_login: str

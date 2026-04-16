@@ -1,8 +1,8 @@
 from typing import Optional
-from pydantic import BaseModel
+from app.schemas.base import BaseSchema
 
 
-class ClientBase(BaseModel):
+class ClientBase(BaseSchema):
     first_name: str
     last_name: str
     phone: str
@@ -20,5 +20,3 @@ class ClientUpdate(ClientBase):
 
 class ClientOut(ClientBase):
     id_client: int
-
-    model_config = {"from_attributes": True}

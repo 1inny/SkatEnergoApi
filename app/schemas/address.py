@@ -1,8 +1,8 @@
 from typing import Optional
-from pydantic import BaseModel
+from app.schemas.base import BaseSchema
 
 
-class AddressBase(BaseModel):
+class AddressBase(BaseSchema):
     street: str
     house: str
     apartment: Optional[str] = None
@@ -20,5 +20,3 @@ class AddressUpdate(AddressBase):
 class AddressOut(AddressBase):
     id_address: int
     locality_name: Optional[str] = None
-
-    model_config = {"from_attributes": True}

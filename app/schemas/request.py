@@ -1,9 +1,9 @@
 from datetime import datetime
 from typing import Optional
-from pydantic import BaseModel
+from app.schemas.base import BaseSchema
 
 
-class RequestCreate(BaseModel):
+class RequestCreate(BaseSchema):
     id_client: int
     id_address: int
     id_employee: int
@@ -12,7 +12,7 @@ class RequestCreate(BaseModel):
     appointment_date: Optional[datetime] = None
 
 
-class RequestUpdate(BaseModel):
+class RequestUpdate(BaseSchema):
     id_client: int
     id_address: int
     id_employee: int
@@ -20,7 +20,7 @@ class RequestUpdate(BaseModel):
     appointment_date: Optional[datetime] = None
 
 
-class RequestOut(BaseModel):
+class RequestOut(BaseSchema):
     id_request: int
     id_client: int
     client_name: Optional[str] = None
@@ -32,5 +32,3 @@ class RequestOut(BaseModel):
     id_status: int
     status_name: Optional[str] = None
     appointment_date: Optional[datetime] = None
-
-    model_config = {"from_attributes": True}

@@ -1,7 +1,7 @@
-from pydantic import BaseModel
+from app.schemas.base import BaseSchema
 
 
-class ChangeTypeBase(BaseModel):
+class ChangeTypeBase(BaseSchema):
     change_type_name: str
 
 
@@ -15,5 +15,3 @@ class ChangeTypeUpdate(ChangeTypeBase):
 
 class ChangeTypeOut(ChangeTypeBase):
     id_change_type: int
-
-    model_config = {"from_attributes": True}

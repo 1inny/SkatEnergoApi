@@ -1,7 +1,7 @@
-from pydantic import BaseModel
+from app.schemas.base import BaseSchema
 
 
-class SubjectTypeBase(BaseModel):
+class SubjectTypeBase(BaseSchema):
     subject_type_name: str
 
 
@@ -15,5 +15,3 @@ class SubjectTypeUpdate(SubjectTypeBase):
 
 class SubjectTypeOut(SubjectTypeBase):
     id_subject_type: int
-
-    model_config = {"from_attributes": True}

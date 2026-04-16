@@ -1,9 +1,9 @@
 from datetime import datetime
 from typing import Optional
-from pydantic import BaseModel
+from app.schemas.base import BaseSchema
 
 
-class CommentCreate(BaseModel):
+class CommentCreate(BaseSchema):
     comment_text: str
     created_at: datetime
     id_request: Optional[int] = None
@@ -11,16 +11,14 @@ class CommentCreate(BaseModel):
     id_employee: int
 
 
-class CommentUpdate(BaseModel):
+class CommentUpdate(BaseSchema):
     comment_text: str
 
 
-class CommentOut(BaseModel):
+class CommentOut(BaseSchema):
     id_comment: int
     comment_text: str
     created_at: datetime
     id_request: Optional[int] = None
     id_appointment: Optional[int] = None
     id_employee: int
-
-    model_config = {"from_attributes": True}

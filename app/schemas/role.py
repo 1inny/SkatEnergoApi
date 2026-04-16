@@ -1,7 +1,7 @@
-from pydantic import BaseModel
+from app.schemas.base import BaseSchema
 
 
-class RoleBase(BaseModel):
+class RoleBase(BaseSchema):
     role_name: str
 
 
@@ -15,5 +15,3 @@ class RoleUpdate(RoleBase):
 
 class RoleOut(RoleBase):
     id_role: int
-
-    model_config = {"from_attributes": True}

@@ -1,9 +1,9 @@
 from datetime import datetime
 from typing import Optional
-from pydantic import BaseModel
+from app.schemas.base import BaseSchema
 
 
-class AttachmentOut(BaseModel):
+class AttachmentOut(BaseSchema):
     id_attachment: int
     id_appointment: int
     file_name: str
@@ -14,5 +14,3 @@ class AttachmentOut(BaseModel):
     uploaded_by: Optional[int] = None
     uploaded_by_name: Optional[str] = None
     file_url: Optional[str] = None
-
-    model_config = {"from_attributes": True}

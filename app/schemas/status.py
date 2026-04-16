@@ -1,7 +1,7 @@
-from pydantic import BaseModel
+from app.schemas.base import BaseSchema
 
 
-class StatusBase(BaseModel):
+class StatusBase(BaseSchema):
     status_name: str
 
 
@@ -15,5 +15,3 @@ class StatusUpdate(StatusBase):
 
 class StatusOut(StatusBase):
     id_status: int
-
-    model_config = {"from_attributes": True}

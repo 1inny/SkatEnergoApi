@@ -1,7 +1,7 @@
-from pydantic import BaseModel
+from app.schemas.base import BaseSchema
 
 
-class LocalityBase(BaseModel):
+class LocalityBase(BaseSchema):
     locality_name: str
 
 
@@ -15,5 +15,3 @@ class LocalityUpdate(LocalityBase):
 
 class LocalityOut(LocalityBase):
     id_locality: int
-
-    model_config = {"from_attributes": True}
